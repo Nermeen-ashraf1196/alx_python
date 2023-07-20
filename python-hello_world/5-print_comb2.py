@@ -1,4 +1,5 @@
-str_1='' 
-for i in range(99):
-    str_1 += str(i)+""
-print(str_1) 
+for number in range(0, 100):
+    if number == 99:
+        print("{}".format(number))
+    else:
+        print("{:02}".format(number), end=", ")
