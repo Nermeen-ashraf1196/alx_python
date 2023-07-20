@@ -1,11 +1,12 @@
 import random
 number = random.randint(-10000, 10000)
-last = abs(number) %10
+digit = abs(number) % 10
 if number < 0:
-    print("Last digit of "+str(number)+" is -"+str(last)+" and is less than 6 and not 0")
-elif last > 5:
-    print("Last digit of "+str(number)+" is "+str(last)+" and is greater than 5")
-elif last == 0:
-    print("Last digit of "+str(number)+" is 0 and is 0")
+    digit = -digit
+print("Last digit of {} is {} and is ".format(number, digit), end="")
+if digit > 5:
+    print("greater than 5")
+elif digit == 0:
+    print("0")
 else:
-    print("Last digit of "+str(number)+" is "+str(last)+" and is less than 6 and not 0")
+    print("less than 6 and not 0")
