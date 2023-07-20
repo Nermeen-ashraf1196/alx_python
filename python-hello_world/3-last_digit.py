@@ -1,20 +1,11 @@
 import random
 number = random.randint(-10000, 10000)
-
-# Extract the last digit of the number
-last_digit = abs(number) % 10
-if number < 0:
-    last_digit *= -1
-
-# Determine the message based on the last digit
-message = "Last digit of {} is {} and is".format(number, last_digit)
-
-if last_digit > 5:
-    message += " greater than 5"
-elif last_digit == 0:
-    message += " 0"
+num_str = repr(number)
+last_digit_str = num_str[-1]
+last_digit = int(last_digit_str)
+if int(last_digit_str) > 5:
+    print (f"Last digit of {number} is {last_digit}","and is greater than 5")
+elif int(last_digit_str) == 0:
+    print(f"Last digit of {number} is {last_digit}","is Zero")
 else:
-    message += " less than 6 and not 0"
-
-# Print the message
-print(message)
+    print(f"Last digit of {number} is {last_digit}","and is less than 6 and not 0")
