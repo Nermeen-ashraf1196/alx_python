@@ -11,4 +11,4 @@ def is_prime(number):
             else:
                 return(False)
     else:
-        return(False)
+        return(True)
