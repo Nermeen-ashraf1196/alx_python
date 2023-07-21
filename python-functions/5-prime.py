@@ -7,7 +7,7 @@ def is_prime(number):
          # If num is divisible by any number between
          # 2 and n / 2, it is not prime
             if (number % i) == 0:
-                return(False)
+                return(True)
             else:
                 return(True)
     else:
