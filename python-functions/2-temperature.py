@@ -1,3 +1,3 @@
 def convert_to_celsius(fahrenheit):
  # Returns the temperature in Celsius.
-    return ((0.56) * (fahrenheit - 32))
+    return ((5/9) * (fahrenheit - 32))
