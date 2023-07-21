@@ -9,6 +9,6 @@ def is_prime(number):
             if (number % i) == 0:
                 return(True)
             else:
-                return(True)
+                return(False)
     else:
         return(False)
