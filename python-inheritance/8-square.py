@@ -1,55 +1,66 @@
-"""meta class to remove __init_subclass__"""
-class ExcludeInitSubclassMeta(type):
-    """remove __init_subclass__"""
-    def __dir__(cls):
-        attributes = super().__dir__()
-        return [attr for attr in attributes if attr != "__init_subclass__"]
-
-"""creation of an empty class"""
-class BaseGeometry(metaclass=ExcludeInitSubclassMeta):
-    """ The base class"""
-    def __dir__(cls) -> None:
-        attributes = super().__dir__()
-        n_attributes = []
-        for attr in attributes:
-            if attr != "__init_subclass__":
-                n_attributes.append(attr)
-        attributes = n_attributes
-        return attributes
-
+"""
+A class BaseGeometry
+"""
+class BaseGeometry:
+    """
+    A class BaseGeometry
+    """
     def area(self):
-        raise Exception("area() is not implemented")
+        """
+        This method must be implemented by subclasses to calculate the area.
+        """
+        raise NotImplementedError("Subclasses must implement this method.")
 
-    def integer_validator(self, name, value):
-        """This validates the value"""
-        if type(value) != int:
-            raise TypeError("{} must be an integer".format(name))
-        if value < 0:
-            raise ValueError("{} must be greater than 0".format(name))
-
-"""rectangle class"""
-class Rectangle(BaseGeometry, metaclass=ExcludeInitSubclassMeta):
-    """Class that takes in width and height and validates it"""
+"""
+A class Rectangle
+Arguments:Width,Height
+"""
+class Rectangle(BaseGeometry):
+    """
+    A class Rectangle
+    Arguments:Width,Height
+    """
+       
     def __init__(self, width, height):
-        self.__width = width
-        self.__height = height
-        super().integer_validator("width", self.__width)
-        super().integer_validator("height", self.__height)
-
-    def __str__(self):
-        return "[Rectangle] {}/{}".format(self.__width, self.__height)
+        """
+        Initializes a rectangle with the given width and height.
+        :param width: Width of the rectangle
+        :param height: Height of the rectangle
+        """
+        self.width = width
+        self.height = height
 
     def area(self):
-        """Calculates area"""
-        return self.__width * self.__height
-
-"""square class"""
-class Square(Rectangle, metaclass=ExcludeInitSubclassMeta):
-    """This class contains all the info about a square"""
+        """
+        Calculates the area of the rectangle.
+        :return: Area of the rectangle
+        """
+        return self.width * self.height
+"""
+A class Square
+Arguments:Rectangle
+        
+ """
+class Square(Rectangle):
+    """
+    A class Square
+    """
     def __init__(self, size):
-        self.__size = size
-        super().integer_validator("size", self.__size)
+        """
+        Initializes a square with the given size.
+        :param size: Size of the square
+        """
+        # Validate the input size
+        self.integer_validator(size)
+        # Call the constructor of the parent class (Rectangle)
+        super().__init__(size, size)
 
-    def area(self):
-        """Calculates the area of a square"""
-        return self.__size**2
+    @staticmethod
+    def integer_validator(value):
+        """
+        Validates that the given value is a positive integer.
+        :param value: Value to be validated
+        :raises ValueError: If the value is not a positive integer
+        """
+        if not isinstance(value, int) or value <= 0:
+            raise TypeError("size must be an integer")
