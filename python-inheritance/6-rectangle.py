@@ -1,39 +1,53 @@
-"""meta class to remove __init_subclass__"""
-class ExcludeInitSubclassMeta(type):
+"""base class BaseGeometry"""
 
-    """remove __init_subclass__"""
-    def __dir__(cls):
-        attributes = super().__dir__()
-        return [attr for attr in attributes if attr != "__init_subclass__"]
-
-"""creation of an empty class"""
-class BaseGeometry(metaclass=ExcludeInitSubclassMeta):
-    """the empty class"""
-    def __dir__(cls)->None:
-        attributes = super().__dir__()
-        n_attributes=[]
-        for attr in attributes:
-            if attr !="__init_subclass__":
-                n_attributes.append(attr)
-        attributes=n_attributes
-        return attributes
+class BaseGeometry:
+    """base class BaseGeometry"""
     
     def area(self):
-         raise Exception("area() is not implemented")
-    def integer_validator(self, name, value):
-        """this validaes value"""
-        if type(value)!=int:
-            raise TypeError("{} must be an integer".format(name))
-        if value<0 or value==0:
-            raise ValueError("{} must be greater than 0".format(name))
+        raise NotImplementedError("Subclasses must implement area() method")
 
-"""class that takes in width and height"""
-class Rectangle(BaseGeometry, metaclass=ExcludeInitSubclassMeta):
-    """class that takes in width and height and validates it"""
+    def perimeter(self):
+        raise NotImplementedError("Subclasses must implement perimeter() method")
 
+"""sub class Rectangle"""
+class Rectangle(BaseGeometry):
+    """sub class Rectangle"""
+    
+    
     def __init__(self, width, height):
-        """the init function"""
-        self.__width=width
-        self.__height=height
-        super().integer_validator("width",self.__width)
-        super().integer_validator("height",self.__height)
+        """Initialize a Rectangle object with width and height.
+        Parameters:
+        width (int): The width of the rectangle.
+        height (int): The height of the rectangle.
+        Raises:
+        ValueError: If width or height is not a positive integer."""
+        self.__width = self.__height = None
+        self.integer_validator(width, "width")
+        self.integer_validator(height, "height")
+        self.__width = width
+        self.__height = height
+
+    def area(self):
+        """Calculate the area of the rectangle.
+            Returns:
+            int: The area of the rectangle."""
+        return self.__width * self.__height
+
+    def perimeter(self):
+        """Calculate the perimeter of the rectangle.
+            Returns:
+            int: The perimeter of the rectangle."""
+        return 2 * (self.__width + self.__height)
+
+    def integer_validator(self, value, name):
+        """Validate if the value is a positive integer.
+        Parameters:
+        value (int): The value to be validated.
+        name (str): The name of the value (used for error message).
+        Raises:
+        TypeError: must be an integer
+        ValueError: If the value is not a positive integer."""
+        if not isinstance(value, int):
+            raise TypeError("{} must be an integer".format(name))
+        if value <= 0:
+            raise ValueError("{} must be greater than 0".format(name))
