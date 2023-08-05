@@ -1,4 +1,4 @@
- # meta class to remove __init_subclass__
+"""meta class to remove __init_subclass__"""
 class ExcludeInitSubclassMeta(type):
     """remove __init_subclass__"""
     def __dir__(cls):
