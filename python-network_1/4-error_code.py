@@ -1,21 +1,19 @@
 """  script that takes in a URL, sends a request to the URL and
     displays the body of the response (decoded in utf-8)
 """
-from urllib.request import Request, urlopen
-from urllib.error import URLError, HTTPError
+import requests
 from sys import argv
 
 
-def error_code():
+def error_rcode():
     """ sends a request to the URL and displays the body of the response """
-    url = argv[1]
-    try:
-        with urlopen(url) as response:
-            the_page = response.read()
-        print(the_page.decode('utf-8'))
-    except HTTPError as e:
-        print('Error code: {}'.format(e.code))
+    response = requests.get(argv[1])
+    status = response.status_code
+    if status >= 400:
+        print('Error code: {}'.format(status))
+    else:
+        print(response.text)
 
 
 if __name__ == "__main__":
-    error_code()
+    error_rcode()
