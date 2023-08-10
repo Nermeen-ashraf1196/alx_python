@@ -1,22 +1,16 @@
-""" Script to send a request to a URL and display the response body or error code
-"""
+"""importing requests"""
 import requests
+
+"""importing sys"""
 import sys
 
-def main():
-    """ Main function to perform the request and handle the response
-    """
-    if len(sys.argv) != 2:
-        print("Usage: {} <URL>".format(sys.argv[0]))
-        sys.exit(1)
+url = sys.argv[1]
+#request = requests.get("https://alu-intranet.hbtn.io/status")
 
-    url = sys.argv[1]
-    response = requests.get(url)
+request = requests.get(url)
+status = request.status_code
 
-    if response.status_code >= 400:
-        print("Error code:", response.status_code)
-    else:
-        print(response.text)
-
-if __name__ == "__main__":
-    main()
+if ( status >= 400):
+    print("Error code:",status)
+else:
+    print("Regular request")
