@@ -1,24 +1,16 @@
-""" HTTP Request Script"""
-
+"""importing requests"""
 import requests
+
+"""importing sys"""
 import sys
 
-def make_request(url):
-    try:
-        response = requests.get(url)
-        print(response.status_code)
+url = sys.argv[1]
+#request = requests.get("https://alu-intranet.hbtn.io/status")
 
-        if response.status_code >= 400:
-            print(f"Error code: {response.status_code}")
-    finally: 
-        pass
-    
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script_name.py <URL>")
-        sys.exit(1)
-
-    url = sys.argv[1]
-    make_request(url)
+request = requests.get(url)
+status = request.status_code
+if ( status >= 400):
+    print("Error code:",status)
+else:
+    print("Regular request")
         
