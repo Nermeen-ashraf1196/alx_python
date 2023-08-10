@@ -1,63 +1,20 @@
-
+"""  script that takes your GitHub credentials (username and password) and
+    uses the GitHub API to display your id
 """
-GitHub API User ID Display Script
-
-This script takes GitHub credentials (username and personal access token) as arguments and uses the GitHub API to display the user's ID.
-Only the 'read:user' permission is needed for this operation.
-
-Usage:
-    ./6-my_github.py <username> <personal_access_token>
-
-Arguments:
-    <username>          GitHub username
-    <personal_access_token>   Personal access token for authentication
-
-Example:
-    ./6-my_github.py papamuziko cisfun
-    Output: 2531536
-
-    ./6-my_github.py papamuziko wrong_pwd
-    Output: None
-"""
-
 import requests
-import sys
+from sys import argv
 
-def get_user_id(username, personal_access_token):
-    username = "Nermeen-ashraf1196"
-    personal_access_token = "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"
-    """
-    Get the user ID using GitHub API.
 
-    Args:
-        username (str): GitHub username
-        personal_access_token (str): Personal access token for authentication
-
-    Returns:
-        str: User ID if successful, otherwise None
-    """
-    url = f'https://api.github.com/user'
-    headers = {'Authorization': f'Basic {username}:{personal_access_token}'}
-    
-    response = requests.get(url, headers=headers)
-    
-    if response.status_code == 200:
-        user_info = response.json()
-        return str(user_info.get('id'))
+def my_github():
+    """sends a POST request to the passed URL with a letter as a parameter"""
+    url = "https://api.github.com/user"
+    values = (argv[1], argv[2])
+    req = requests.get(url, auth=values)
+    if req.status_code >= 400:
+        print("None")
     else:
-        return None
+        print(req.json().get('id'))
 
-def main():
-    if len(sys.argv) != 3:
-        print("Usage: ./6-my_github.py <username> <personal_access_token>")
-        sys.exit(1)
-    
-    username = sys.argv[1]
-    personal_access_token = sys.argv[2]
-    
-    user_id = get_user_id(username, personal_access_token)
-    
-    print(user_id)
 
 if __name__ == "__main__":
-    main()
+    my_github()
