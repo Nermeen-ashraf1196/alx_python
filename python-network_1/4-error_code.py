@@ -1,27 +1,32 @@
-"""
-    Takes a URL as input, sends a request, and displays the response body or error code.
+""" HTTP Request Script
 """
 
 import requests
 import sys
 
+def make_request(url):
+    """ Sends a request to the given URL and displays the response body.
 
-def fetch_and_display(url):
+    Args:
+        url (str): The URL to send the request to.
+
+    Returns:
+        None
     """
-    Fetches the provided URL, displays the response body or error code.
-    """
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+        print(response.status_code)
 
-    if response.status_code >= 400:
-        print("Error code: {}".format(response.status_code))
-    else:
-        print(response.text)
-
+        if response.status_code >= 400:
+            print(f"Error code: {response.status_code}")
+    finally: 
+        pass
+    
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: {} <URL>".format(sys.argv[0]))
+        print("Usage: python script_name.py <URL>")
         sys.exit(1)
 
     url = sys.argv[1]
-    fetch_and_display(url)
+    make_request(url)
