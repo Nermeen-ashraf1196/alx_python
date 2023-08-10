@@ -1,16 +1,17 @@
-"""importing requests"""
+"""Sends a request to a given URL and displays the response body.
+Usage: ./7-error_code.py <URL>
+  - Handles HTTP errors.
+"""
+import sys
 import requests
 
-"""importing sys"""
-import sys
 
-#url = sys.argv[1]
-#request = requests.get("https://alu-intranet.hbtn.io/status")
+if __name__ == "__main__":
+    url = sys.argv[1]
 
-request = requests.get("https://alu-intranet.hbtn.io/statu")
-status = request.status_code
-
-if ( status >= 400):
-    print("Error code:",status)
-else:
-    print("Regular request")
+    r = requests.get(url)
+    if r.status_code >= 400:
+        print("Error code: {}".format(r.status_code))
+    else:
+        print(r.text)
+        
