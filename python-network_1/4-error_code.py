@@ -1,16 +1,21 @@
-"""importing requests"""
-import requests
+"""  script that takes in a URL, sends a request to the URL and
+    displays the body of the response (decoded in utf-8)
+"""
+from urllib.request import Request, urlopen
+from urllib.error import URLError, HTTPError
+from sys import argv
 
-"""importing sys"""
-import sys
 
-url = sys.argv[1]
-#request = requests.get("https://alu-intranet.hbtn.io/status")
+def error_code():
+    """ sends a request to the URL and displays the body of the response """
+    url = argv[1]
+    try:
+        with urlopen(url) as response:
+            the_page = response.read()
+        print(the_page.decode('utf-8'))
+    except HTTPError as e:
+        print('Error code: {}'.format(e.code))
 
-request = requests.get(url)
-status = request.status_code
 
-if ( status >= 400):
-    print("Error code:",status)
-else:
-    print("Regular request")
+if __name__ == "__main__":
+    error_code()
