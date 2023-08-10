@@ -1,16 +1,27 @@
-"""Sends a request to a given URL and displays the response body.
-Usage: ./7-error_code.py <URL>
-  - Handles HTTP errors.
 """
-import sys
+    Takes a URL as input, sends a request, and displays the response body or error code.
+"""
+
 import requests
+import sys
+
+
+def fetch_and_display(url):
+    """
+    Fetches the provided URL, displays the response body or error code.
+    """
+    response = requests.get(url)
+
+    if response.status_code >= 400:
+        print("Error code: {}".format(response.status_code))
+    else:
+        print(response.text)
 
 
 if __name__ == "__main__":
-    url = sys.argv[1]
+    if len(sys.argv) != 2:
+        print("Usage: {} <URL>".format(sys.argv[0]))
+        sys.exit(1)
 
-    r = requests.get(url)
-    if r.status_code >= 400:
-        print("Error code: {}".format(r.status_code))
-    else:
-        print(r.text)
+    url = sys.argv[1]
+    fetch_and_display(url)
